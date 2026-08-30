@@ -1,0 +1,17 @@
+# Compiled artifacts
+*.so
+*.dll
+*.dylib
+
+# Lua tooling caches
+.luacheckcache
+.stylua.toml.bak
+
+# OS/editor noise
+.DS_Store
+*.swp
+*~
+.tags
+
+# Local test dependencies (plenary.nvim cloned by scripts/test.sh)
+tests/.deps/
