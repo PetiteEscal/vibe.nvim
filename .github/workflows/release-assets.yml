@@ -1,0 +1,30 @@
+name: release-assets
+
+# Attaches a zip of the plugin to the release that release-please just created.
+# release-please owns version bump + tag + release notes; this only adds the
+# downloadable artifact, so it stays independent of the release mechanism.
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  attach:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build plugin zip
+        run: |
+          artifact="vibe.nvim-${GITHUB_REF#refs/tags/}"
+          git archive --format=zip --prefix="vibe.nvim/" -o "$artifact.zip" HEAD
+          echo "path=$artifact.zip" >> "$GITHUB_ENV"
+
+      - name: Attach to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.path }}
