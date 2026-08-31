@@ -17,11 +17,14 @@ jobs:
       # default GITHUB_TOKEN is blocked from creating PRs at the repo level, so
       # we mint an installation token from the GitHub App (GH_APP_ID /
       # GH_PRIVATE_KEY) and pass it via the `token` input.
-      - uses: actions/create-github-app-token@v2
+      - uses: actions/create-github-app-token@v3
         id: app-token
         with:
           app-id: ${{ secrets.GH_APP_ID }}
           private-key: ${{ secrets.GH_PRIVATE_KEY }}
+          # Scope the token to exactly what release-please needs.
+          permission-contents: write
+          permission-pull-requests: write
       - uses: googleapis/release-please-action@v4
         with:
           token: ${{ steps.app-token.outputs.token }}
@@ -29,3 +32,6 @@ jobs:
           config-file: .release-please-config.json
           manifest-file: .release-please-manifest.json
           include-component-in-tag: false
+          # release-please does not always infer the target branch from the
+          # push event; without this it fails with "Error adding to tree".
+          target-branch: ${{ github.ref_name }}

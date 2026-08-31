@@ -15,7 +15,7 @@ jobs:
       matrix:
         nvim: ["v0.10.4", "v0.11.4", "nightly"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install Neovim
         uses: rhysd/action-setup-vim@v1
@@ -35,8 +35,9 @@ jobs:
     name: Check formatting (stylua)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: JohnnyMorganz/stylua-action@v4
+      - uses: actions/checkout@v5
+      - uses: JohnnyMorganz/stylua-action@v5
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           version: latest
           args: --check lua/ tests/
