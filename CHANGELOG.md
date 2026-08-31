@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/PetiteEscal/vibe.nvim/compare/v1.0.0...v1.1.0) (2026-08-31)
+
+
+### Features
+
+* add VibePlans command to list and open plan files ([#4](https://github.com/PetiteEscal/vibe.nvim/issues/4)) ([6132abd](https://github.com/PetiteEscal/vibe.nvim/commit/6132abdd0241812608aaea972870ae34dde8330f))
+
 ## 1.0.0 (2026-08-31)
 
 
