@@ -322,6 +322,47 @@ function M.send_diagnostic()
   })
 end
 
+---Resolve the plans directory, defaulting to ~/.vibe/plans when not configured.
+---@return string dir Absolute path to the plans directory
+local function plans_dir()
+  local configured = M.state.config.plans_dir
+  return vim.fn.expand(configured and configured ~= "" and configured or "~/.vibe/plans")
+end
+
+---List and open a Vibe plan file. Vibe stores each validated plan in
+---~/.vibe/plans/<timestamp>-<slug>.md; slugs are generated, so we sort by
+---modification time (most recent first) and let vim.ui.select (snacks.picker
+---when available) handle the rest. The chosen plan opens in a new tab.
+function M.open_plan()
+  local dir = plans_dir()
+  if vim.fn.isdirectory(dir) == 0 then
+    vim.notify("Aucun plan dans " .. dir, vim.log.levels.WARN)
+    return
+  end
+  local files = vim.fn.glob(dir .. "/*.md", false, true)
+  if #files == 0 then
+    vim.notify("Aucun plan dans " .. dir, vim.log.levels.WARN)
+    return
+  end
+  local function mtime(path)
+    local st = vim.uv.fs_stat(path)
+    return st and st.mtime.sec or 0
+  end
+  table.sort(files, function(a, b)
+    return mtime(a) > mtime(b)
+  end)
+  vim.ui.select(files, {
+    prompt = "Plan Vibe",
+    format_item = function(path)
+      return os.date("%d/%m %H:%M", mtime(path)) .. "  " .. vim.fs.basename(path)
+    end,
+  }, function(choice)
+    if choice then
+      vim.cmd.tabedit(vim.fn.fnameescape(choice))
+    end
+  end)
+end
+
 --------------------------------------------------------------------------------
 -- Setup
 --------------------------------------------------------------------------------
@@ -534,6 +575,12 @@ function M._create_commands()
     M.send_diagnostic()
   end, {
     desc = "Send the current line's diagnostics to Vibe",
+  })
+
+  vim.api.nvim_create_user_command("VibePlans", function()
+    M.open_plan()
+  end, {
+    desc = "List and open a Vibe plan file (~/.vibe/plans/*.md)",
   })
 end
 

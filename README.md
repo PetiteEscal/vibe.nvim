@@ -43,6 +43,7 @@ vibe.nvim takes the pragmatic path: Vibe already has an excellent interactive TU
     "VibeRestart",
     "VibeQuit",
     "VibeDiagnostic",
+    "VibePlans",
   },
   -- Letters aligned with claudecode.nvim (`<leader>a*` -> `<leader>v*`):
   -- b=buffer, s=send, q=kill, r=resume, C=continue, e=diagnostic.
@@ -66,6 +67,7 @@ vibe.nvim takes the pragmatic path: Vibe already has an excellent interactive TU
     { "<leader>vC", "<cmd>VibeContinue<cr>", desc = "Continue last session (vibe -c)" },
     { "<leader>vm", "<cmd>VibeModel<cr>", desc = "Select model (/model)" },
     { "<leader>vk", "<cmd>VibeCompact<cr>", desc = "Compact context (/compact)" },
+    { "<leader>vp", "<cmd>VibePlans<cr>", desc = "Open a Vibe plan" },
   },
 }
 ```
@@ -106,6 +108,7 @@ If `vibe` is not on your `PATH`, point the plugin at it:
 | `:VibeRestart [args]` | Restart the Vibe terminal (optionally with extra args) |
 | `:VibeQuit` | Kill the Vibe terminal process (force) — use before `:VibeContinue`/`:VibeResume` so `-c` actually relaunches |
 | `:VibeDiagnostic` | Send the current line's diagnostics to Vibe's prompt (submitted) |
+| `:VibePlans` | List and open a Vibe plan file (`~/.vibe/plans/*.md`, most recent first) |
 | `:checkhealth vibe` | Verify Neovim version, the `vibe` CLI, terminal provider, and running state |
 
 ## Usage
