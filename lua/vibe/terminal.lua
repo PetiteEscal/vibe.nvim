@@ -109,7 +109,10 @@ local function get_provider()
         return enhanced_provider
       else
         local availability_msg = is_available_ok and "provider reports not available" or "error checking availability"
-        logger.warn("terminal", "Custom table provider configured but " .. availability_msg .. ". Falling back to 'native'.")
+        logger.warn(
+          "terminal",
+          "Custom table provider configured but " .. availability_msg .. ". Falling back to 'native'."
+        )
       end
     else
       logger.warn("terminal", "Invalid custom table provider: " .. error_msg .. ". Falling back to 'native'.")
@@ -158,7 +161,10 @@ local function get_provider()
       logger.warn("terminal", "'none' provider configured but failed to load. Falling back to 'native'.")
     end
   elseif type(defaults.provider) == "string" then
-    logger.warn("terminal", "Invalid provider configured: " .. tostring(defaults.provider) .. ". Defaulting to 'native'.")
+    logger.warn(
+      "terminal",
+      "Invalid provider configured: " .. tostring(defaults.provider) .. ". Defaulting to 'native'."
+    )
   else
     logger.warn(
       "terminal",
@@ -354,7 +360,10 @@ function M.setup(user_term_config, p_terminal_cmd, p_env)
   if p_env == nil or type(p_env) == "table" then
     defaults.env = p_env or {}
   else
-    vim.notify("vibe.terminal.setup: Invalid env provided: " .. tostring(p_env) .. ". Using empty table.", vim.log.levels.WARN)
+    vim.notify(
+      "vibe.terminal.setup: Invalid env provided: " .. tostring(p_env) .. ". Using empty table.",
+      vim.log.levels.WARN
+    )
     defaults.env = {}
   end
 
@@ -369,13 +378,19 @@ function M.setup(user_term_config, p_terminal_cmd, p_env)
       if type(v) == "number" and v > 0 and v < 1 then
         defaults.split_width_percentage = v
       else
-        vim.notify("vibe.terminal.setup: Invalid value for split_width_percentage: " .. tostring(v), vim.log.levels.WARN)
+        vim.notify(
+          "vibe.terminal.setup: Invalid value for split_width_percentage: " .. tostring(v),
+          vim.log.levels.WARN
+        )
       end
     elseif k == "provider" then
       if type(v) == "table" or v == "snacks" or v == "native" or v == "external" or v == "auto" or v == "none" then
         defaults.provider = v
       else
-        vim.notify("vibe.terminal.setup: Invalid value for provider: " .. tostring(v) .. ". Defaulting to 'auto'.", vim.log.levels.WARN)
+        vim.notify(
+          "vibe.terminal.setup: Invalid value for provider: " .. tostring(v) .. ". Defaulting to 'auto'.",
+          vim.log.levels.WARN
+        )
       end
     elseif k == "provider_opts" then
       if type(v) == "table" then
@@ -385,7 +400,10 @@ function M.setup(user_term_config, p_terminal_cmd, p_env)
             if opt_v == nil or type(opt_v) == "string" or type(opt_v) == "function" then
               defaults[k][opt_k] = opt_v
             else
-              vim.notify("vibe.terminal.setup: Invalid value for provider_opts.external_terminal_cmd: " .. tostring(opt_v), vim.log.levels.WARN)
+              vim.notify(
+                "vibe.terminal.setup: Invalid value for provider_opts.external_terminal_cmd: " .. tostring(opt_v),
+                vim.log.levels.WARN
+              )
             end
           else
             defaults[k][opt_k] = opt_v
@@ -398,7 +416,10 @@ function M.setup(user_term_config, p_terminal_cmd, p_env)
       if type(v) == "boolean" then
         defaults.show_native_term_exit_tip = v
       else
-        vim.notify("vibe.terminal.setup: Invalid value for show_native_term_exit_tip: " .. tostring(v), vim.log.levels.WARN)
+        vim.notify(
+          "vibe.terminal.setup: Invalid value for show_native_term_exit_tip: " .. tostring(v),
+          vim.log.levels.WARN
+        )
       end
     elseif k == "auto_close" then
       if type(v) == "boolean" then
@@ -642,7 +663,12 @@ function M.send_to_terminal(text, opts)
   end
   logger.debug(
     "terminal",
-    string.format("send_to_terminal: wrote %d byte(s) to channel %s (submit=%s)", #payload, tostring(chan), tostring(submit))
+    string.format(
+      "send_to_terminal: wrote %d byte(s) to channel %s (submit=%s)",
+      #payload,
+      tostring(chan),
+      tostring(submit)
+    )
   )
 
   if opts.focus then

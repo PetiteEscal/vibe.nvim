@@ -499,7 +499,10 @@ function M._create_commands()
     local bufnr = terminal.get_active_terminal_bufnr()
     local provider = M.state.config.terminal and M.state.config.terminal.provider or "auto"
     if bufnr and vim.api.nvim_buf_is_valid(bufnr) then
-      logger.info("command", "Vibe terminal is running (buffer " .. tostring(bufnr) .. ", provider=" .. tostring(provider) .. ")")
+      logger.info(
+        "command",
+        "Vibe terminal is running (buffer " .. tostring(bufnr) .. ", provider=" .. tostring(provider) .. ")"
+      )
     else
       logger.info("command", "Vibe terminal is not running (provider=" .. tostring(provider) .. ")")
     end

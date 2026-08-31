@@ -42,10 +42,7 @@ M.defaults = {
 ---@param config table The configuration table to validate.
 ---@return boolean true if the configuration is valid.
 function M.validate(config)
-  assert(
-    config.terminal_cmd == nil or type(config.terminal_cmd) == "string",
-    "terminal_cmd must be nil or a string"
-  )
+  assert(config.terminal_cmd == nil or type(config.terminal_cmd) == "string", "terminal_cmd must be nil or a string")
 
   -- Validate terminal config
   assert(type(config.terminal) == "table", "terminal must be a table")
