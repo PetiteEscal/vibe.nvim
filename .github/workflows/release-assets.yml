@@ -16,7 +16,7 @@ jobs:
   attach:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Build plugin zip
         run: |
@@ -25,6 +25,6 @@ jobs:
           echo "path=$artifact.zip" >> "$GITHUB_ENV"
 
       - name: Attach to release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: ${{ env.path }}

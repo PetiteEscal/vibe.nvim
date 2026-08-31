@@ -17,7 +17,7 @@ jobs:
       # default GITHUB_TOKEN is blocked from creating PRs at the repo level, so
       # we mint an installation token from the GitHub App (GH_APP_ID /
       # GH_PRIVATE_KEY) and pass it via the `token` input.
-      - uses: actions/create-github-app-token@v2
+      - uses: actions/create-github-app-token@v3
         id: app-token
         with:
           app-id: ${{ secrets.GH_APP_ID }}
