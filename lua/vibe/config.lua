@@ -35,6 +35,11 @@ M.defaults = {
       external_terminal_cmd = nil,
     },
   },
+
+  -- Directory where the Vibe CLI stores plan files (<timestamp>-<slug>.md).
+  -- nil => defaults to ~/.vibe/plans at runtime. Override only if you pointed
+  -- the CLI at a different plans directory.
+  plans_dir = nil,
 }
 
 ---Validates the provided configuration table.
@@ -101,6 +106,8 @@ function M.validate(config)
     assert(type(key) == "string", "env keys must be strings")
     assert(type(value) == "string", "env values must be strings")
   end
+
+  assert(config.plans_dir == nil or type(config.plans_dir) == "string", "plans_dir must be nil or a string")
 
   return true
 end
