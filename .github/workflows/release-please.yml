@@ -22,9 +22,10 @@ jobs:
         with:
           app-id: ${{ secrets.GH_APP_ID }}
           private-key: ${{ secrets.GH_PRIVATE_KEY }}
-          # Scope the token to exactly what release-please needs.
-          permission-contents: write
-          permission-pull-requests: write
+          # Inherit the installation's permissions. Do NOT scope down with
+          # permission-* inputs unless the App install already grants those
+          # exact permissions, or token creation is rejected with
+          # "The permissions requested are not granted to this installation".
       - uses: googleapis/release-please-action@v4
         with:
           token: ${{ steps.app-token.outputs.token }}
